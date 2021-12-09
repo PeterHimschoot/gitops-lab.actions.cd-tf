@@ -9,10 +9,10 @@ variable "tenant_id" {
 
 terraform {
   backend "remote" {
-    organization = "{your-organization}"
+    organization = "u2u-training-peter"
 
     workspaces {
-      name = "{your-workspace}"
+      name = "gitops-actions-cd-tf"
     }
   }
   required_providers {
