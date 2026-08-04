@@ -9,15 +9,15 @@ terraform {
   }
 
   backend "azurerm" {
-        storage_account_name = "sapeterdemo20250622"
+        storage_account_name = "sapeterlab20260804"
         container_name = "terraform"
         key = "terraform.tfstate"
-        access_key = "Ty/6oYwIX9wnxYwNvCOKpaqcVQLohF7M1TqK4kope6OauaHw2JqZ4fWQCINQvoBTDnk2zsV5ueas+AStN/INew=="
+        access_key = "l3Tz/4n/+YOapm+eimWqhGwDnI3BvEXH0mX46/M+rvmkciGGMyDBIDleTx12EQbOWitNwk8yaxPI+AStmLlBKw=="
     }
 }
 
 provider "azurerm" {
-  subscription_id = "cd8acfc4-baea-4c96-8ae2-f6b5fc55eda8"
+  subscription_id = "287f582d-e627-4387-91db-3b2cdffa64ef"
   features {
   }
 }
