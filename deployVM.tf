@@ -127,7 +127,7 @@ resource "azurerm_windows_virtual_machine" "VM" {
     name = var.VMName
     resource_group_name = azurerm_resource_group.RG.name
     location = azurerm_resource_group.RG.location
-    size = "Standard_DS2_v2"
+    size = "Standard_D2ls_v5"
     admin_username = "peter"
     admin_password = "U2U_secret"
     network_interface_ids = [azurerm_network_interface.VM_NIC.id]
