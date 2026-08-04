@@ -15,43 +15,52 @@ jobs:
     steps:
     # Checkout the repository to the GitHub Actions runner
     - name: Checkout
-      uses: actions/checkout@v4
-    # Install the latest version of Terraform CLI
-    - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v2
-    - name: Azure Login
-      uses: Azure/login@v2.3.0
-      with:
-        # Paste output of `az ad sp create-for-rbac` as value of secret variable: AZURE_CREDENTIALS
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
-    # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
-    - name: Terraform Init
-      run: terraform init
-    # Generates an execution plan for Terraform
-    - name: Terraform Plan
-      run: terraform plan
+      uses: actions/checkout@v7
       
-  PROD-terraform:
-    name: 'PROD-Terraform'
-    environment: PROD
-    runs-on: ubuntu-latest
-
-    steps:
-    # Checkout the repository to the GitHub Actions runner
-    - name: Checkout
-      uses: actions/checkout@v4
     # Install the latest version of Terraform CLI
     - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v2
+      uses: hashicorp/setup-terraform@v4
+      
     - name: Azure Login
-      uses: Azure/login@v2.3.0
+      uses: Azure/login@3
       with:
         # Paste output of `az ad sp create-for-rbac` as value of secret variable: AZURE_CREDENTIALS
         creds: ${{ secrets.AZURE_CREDENTIALS }}
+        
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
       run: terraform init
+      
     # Generates an execution plan for Terraform
     - name: Terraform Plan
-      run: terraform plan
+      run: terraform plan -out main.tfplan
+
+    - name: Terraform Apply
+      # if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      run: terraform apply -auto-approve
+
+      
+  # PROD-terraform:
+  #   name: 'PROD-Terraform'
+  #   environment: PROD
+  #   runs-on: ubuntu-latest
+
+  #   steps:
+  #   # Checkout the repository to the GitHub Actions runner
+  #   - name: Checkout
+  #     uses: actions/checkout@v4
+  #   # Install the latest version of Terraform CLI
+  #   - name: Setup Terraform
+  #     uses: hashicorp/setup-terraform@v2
+  #   - name: Azure Login
+  #     uses: Azure/login@v2.3.0
+  #     with:
+  #       # Paste output of `az ad sp create-for-rbac` as value of secret variable: AZURE_CREDENTIALS
+  #       creds: ${{ secrets.AZURE_CREDENTIALS }}
+  #   # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
+  #   - name: Terraform Init
+  #     run: terraform init
+  #   # Generates an execution plan for Terraform
+  #   - name: Terraform Plan
+  #     run: terraform plan
 
